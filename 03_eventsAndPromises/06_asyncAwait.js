@@ -1,5 +1,6 @@
-//func aysnc, pues no sé eso al server cuanto le tome
 
+
+//definoi promesas.codigo asincrono
 //creo función asíncrona
 function ordenarProducto(producto) {
   return new Promise((resolve, reject) => {
@@ -32,18 +33,25 @@ function deliveryProcessing(respuesta) {
 }
 
 
-// priomise chaining
-ordenarProducto('tasse')
-  .then(response => {
-    console.log('Response received');
-    console.log(response);
-    return deliveryProcessing(response)
-  })
-  .then(processedResponse => {
+
+// promise chaining
+async function performDelivery(producto) {
+  try {
+
+    //1er código asincrno
+    const response = await ordenarProducto(producto) 
+    console.log('Processing response.....');
+    console.log(`The response was: ${response}`);
+
+    //2do codigo asícrno.
+    const processedResponse = await deliveryProcessing(response)
     console.log(processedResponse);
-  })
-  .catch(err => {
-    console.log(err);
-  })
 
 
+  } catch (error) {
+    console.log(error);
+  }
+  
+}
+
+performDelivery('tasse')
