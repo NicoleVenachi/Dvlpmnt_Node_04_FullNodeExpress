@@ -20,8 +20,8 @@ const server = http.createServer((req,res) => {
       return handlePostRequest(req,res)
 
     default:
-
-      console.log(`The server can't handle the method: ${method}`);
+      res.statusCode = 501; //
+      res.end(`The server can't handle the method: ${method}`);
       break;
   }
 })
@@ -33,15 +33,20 @@ function handleGetRequest(req,res) {
   //valido request por path
   if (path === '/') {
     // en rooot, digo que tod bien y mando respuesta
-    res.statusCode = 200;
-    return res.end('Welco to this server and API created using Node')
+    res.statusCode = 200; //por defecto es 200, asi que no es necesario ponerlo
+
+    res.writeHead(200, {"Content-Type": "application/json"})// configuro head personaizado (status code y header)
+
+    return res.end('Welcome to this server and API created using Node') // ojito porque esta respuesta no es JSON
+
+    // podria ser /api/courses
   } else if (path === '/courses') {
       // en /cursos, mando la info de todos los cursos
-      res.statusCode = 200;
+
       return res.end(JSON.stringify(courses.coursesInfo)) //mando en respuesta los datos de los cursos (en forma ee texto apra Tx)
   } else if(path === '/courses/programming') {
      // en /cursos/programming, mando la info de los cursos de programacion
-      res.statusCode = 200;
+
       return res.end(JSON.stringify(courses.coursesInfo.programming)) //mando en respuesta los datos de los cursos de programacion
   }
 
@@ -57,7 +62,6 @@ function handlePostRequest(req,res) {
   //valido request por path
   if (path === '/courses/programming') {
     // vamos a agregar cursos en programacion (simulado de momento)
-    res.statusCode = 200;
     return res.end('The server reeibed a POST request on /courses/programming')
   }
 
