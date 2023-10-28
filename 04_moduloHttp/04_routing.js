@@ -61,7 +61,22 @@ function handlePostRequest(req,res) {
 
   //valido request por path
   if (path === '/courses/programming') {
-    // vamos a agregar cursos en programacion (simulado de momento)
+    // vamos a agregar cursos en programacion (ahora real)
+    // no es tan easy procesar/sacar cuerpo de solicitud con node
+
+    let reqBody = '';
+
+    req.on('data', (content) => {
+      //  al recibir data, la almaceno, y lo convierto a JS
+      reqBody = JSON.parse(content);
+    })
+
+    req.on('end', () => {
+      //  al terminar Tx, lo imprimo lo recibido
+      console.log(reqBody);
+      console.log(typeof reqBody);
+    })
+
     return res.end('The server reeibed a POST request on /courses/programming')
   }
 
