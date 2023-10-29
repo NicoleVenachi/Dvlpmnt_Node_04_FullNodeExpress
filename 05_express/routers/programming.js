@@ -66,8 +66,24 @@ routerProgramming.post('/', (req, res) => { //post de
   programming.push(newCourse) //agrego a la data sored
 
   res.send(JSON.stringify(programming)) //mando como rta todos los cursos
-
 })
+
+// put method
+routerProgramming.put('/:id', (req, res) => { //post de
+  
+  const {id} = req.params
+  let courseToUpdate = req.body;//saco el new course del body
+
+  const dataStoredArrayId = programming.findIndex((course) => course.id == id) //find id from an element into an array (data en programming es un array de objetos)
+
+
+  if (dataStoredArrayId >= 0){ //sino se encuentra id,envía -1
+    programming[dataStoredArrayId] = courseToUpdate //actualizo el en esa posicion con la new info
+  }
+
+  res.send(JSON.stringify(programming)) //mando como rta todos los cursos
+})
+
 
 // ******** Exporto router **********
 module.exports = routerProgramming //lo asigno directamente al objeto exports, para importarlo de una
