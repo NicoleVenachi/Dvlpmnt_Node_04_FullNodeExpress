@@ -13,7 +13,7 @@ routerProgramming.use(express.json()) //proceso JSON
 // ****** Routing de este router/objeto******
 
 routerProgramming.get('/', (req,res) => { //programming courses
-  res.send(JSON.stringify(programming)) //envio pero antes de Tx lo paso a texto
+  res.json(programming) //envio pero antes de Tx lo paso a texto
 })
 
 routerProgramming.get('/:language', (req,res) => { //handle :URL PARAMETERS
@@ -31,11 +31,11 @@ routerProgramming.get('/:language', (req,res) => { //handle :URL PARAMETERS
   }
 
   if (req.query.sort === 'views') {//saco ?QUERY PARAMETERS y ordeno de acuerdo al criterio
-    return res.send( JSON.stringify(coursesToShow.sort((a,b)=> a.views - b.views)) ) // b-a, descendente; a=b, ascendente
+    return res.json( coursesToShow.sort((a,b)=> a.views - b.views)) // b-a, descendente; a=b, ascendente
   }
 
 
-  res.send(JSON.stringify(coursesToShow)) //
+  res.json(coursesToShow) //
 })
 
 
@@ -52,10 +52,10 @@ routerProgramming.get('/:language/:level', (req,res) => { //handle :URL PARAMETE
 
   if (coursesToShow.length === 0) {
     //res.status(404); // not found resource (envio rta en una unica linea)
-    return res.status(404).send(`No ${level} level ${language} courses found `)
+    return res.status(204).send(`No ${level} level ${language} courses found `)
   }
 
-  res.send(JSON.stringify(coursesToShow)) //
+  res.json(coursesToShow) //
 })
 
 // post method
@@ -65,7 +65,7 @@ routerProgramming.post('/', (req, res) => {
 
   programming.push(newCourse) //agrego a la data sored
 
-  res.send(JSON.stringify(programming)) //mando como rta todos los cursos
+  res.json(programming) //mando como rta todos los cursos
 })
 
 // put method
@@ -81,7 +81,7 @@ routerProgramming.put('/:id', (req, res) => {
     programming[dataStoredArrayId] = courseToUpdate //actualizo el en esa posicion con la new info
   }
 
-  res.send(JSON.stringify(programming)) //mando como rta todos los cursos
+  res.json(programming) //mando como rta todos los cursos
 })
 
 // patch method
@@ -98,8 +98,11 @@ routerProgramming.patch('/:id', (req, res) => { //post de
 
     Object.assign(courseToUpdate, infoToUpdate) // permite atualizar un objeto dentro de otro objeto, fuente que tenga esas mismas keys
   }
+  else {
+    res.status(404) //not found del recurso
+  }
 
-  res.send(JSON.stringify(programming)) //mando como rta todos los cursos
+  res.json(programming) //mando como rta todos los cursos
 })
 
 
@@ -115,7 +118,7 @@ routerProgramming.delete('/:id', (req, res) => { //post de
     programming.splice(dataStoredArrayId, 1) //delete con splice, cortando en ese id un elemento
   }
 
-  res.send(JSON.stringify(programming)) //mando como rta todos los cursos
+  res.json(programming) //mando como rta todos los cursos
 })
 
 
