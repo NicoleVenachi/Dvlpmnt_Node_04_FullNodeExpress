@@ -103,6 +103,22 @@ routerProgramming.patch('/:id', (req, res) => { //post de
 })
 
 
+// delete method
+routerProgramming.delete('/:id', (req, res) => { //post de
+  
+  const {id} = req.params
+
+  const dataStoredArrayId = programming.findIndex((course) => course.id == id) //find id from an element into an array (data en programming es un array de objetos)
+
+
+  if (dataStoredArrayId >= 0){ //sino se encuentra id,envía -1
+    programming.splice(dataStoredArrayId, 1) //delete con splice, cortando en ese id un elemento
+  }
+
+  res.send(JSON.stringify(programming)) //mando como rta todos los cursos
+})
+
+
 
 
 // ******** Exporto router **********
