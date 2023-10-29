@@ -35,6 +35,11 @@ app.get('/api/courses/programming/:language', (req,res) => { //handle :URL PARAM
     return res.status(404).send(`No ${language} courses found `)
   }
 
+  if (req.query.sort === 'views') {//saco ?QUERY PARAMETERS y ordeno de acuerdo al criterio
+    return res.send( JSON.stringify(coursesToShow.sort((a,b)=> a.views - b.views)) ) // b-a, descendente; a=b, ascendente
+  }
+
+
   res.send(JSON.stringify(coursesToShow)) //
 })
 
