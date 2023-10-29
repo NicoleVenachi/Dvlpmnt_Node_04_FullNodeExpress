@@ -38,6 +38,28 @@ app.get('/api/courses/programming/:language', (req,res) => { //handle :URL PARAM
   res.send(JSON.stringify(coursesToShow)) //
 })
 
+
+app.get('/api/courses/programming/:language/:level', (req,res) => { //handle :URL PARAMETERS (filtrar por 2 URL params)
+
+  // console.log(req.params);
+  const {language, level} = req.params //saco los url params
+
+
+
+  const coursesToShow = coursesInfo.programming.filter(course => ((course.language === language) && (course.level === level)) ) //filtro info del curso buscado
+
+  //mando results
+
+  if (coursesToShow.length === 0) {
+    //res.status(404); // not found resource (envio rta en una unica linea)
+    return res.status(404).send(`No ${level} level ${language} courses found `)
+  }
+
+  res.send(JSON.stringify(coursesToShow)) //
+})
+
+
+
 app.get('/api/courses/mathematics', (req,res) => { //mathematics courses
   res.send(JSON.stringify(coursesInfo.mathematics)) //envio pero antes de Tx lo paso a texto
 })
