@@ -59,7 +59,7 @@ routerProgramming.get('/:language/:level', (req,res) => { //handle :URL PARAMETE
 })
 
 // post method
-routerProgramming.post('/', (req, res) => { //post de
+routerProgramming.post('/', (req, res) => { 
   
   let newCourse = req.body;//saco el new course del body
 
@@ -69,7 +69,7 @@ routerProgramming.post('/', (req, res) => { //post de
 })
 
 // put method
-routerProgramming.put('/:id', (req, res) => { //post de
+routerProgramming.put('/:id', (req, res) => { 
   
   const {id} = req.params
   let courseToUpdate = req.body;//saco el new course del body
@@ -83,6 +83,26 @@ routerProgramming.put('/:id', (req, res) => { //post de
 
   res.send(JSON.stringify(programming)) //mando como rta todos los cursos
 })
+
+// patch method
+routerProgramming.patch('/:id', (req, res) => { //post de
+  
+  const {id} = req.params
+  let infoToUpdate = req.body;//saco el new course del body
+
+  const dataStoredArrayId = programming.findIndex((course) => course.id == id) //find id from an element into an array (data en programming es un array de objetos)
+
+
+  if (dataStoredArrayId >= 0){ //sino se encuentra id,envía -1
+    const courseToUpdate = programming[dataStoredArrayId] //saco el curso correspondiente a ese id
+
+    Object.assign(courseToUpdate, infoToUpdate) // permite atualizar un objeto dentro de otro objeto, fuente que tenga esas mismas keys
+  }
+
+  res.send(JSON.stringify(programming)) //mando como rta todos los cursos
+})
+
+
 
 
 // ******** Exporto router **********
