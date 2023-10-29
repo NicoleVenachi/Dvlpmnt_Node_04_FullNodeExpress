@@ -6,6 +6,10 @@ const {programming} = require('../datos/cursos').coursesInfo //importo la data h
 //  *********** Routers *******
 const routerProgramming = express.Router() //creo router
 
+// ******* Indico tipos de bodys a procesar (Middleware) ****** 
+
+routerProgramming.use(express.json()) //proceso JSON
+
 // ****** Routing de este router/objeto******
 
 routerProgramming.get('/', (req,res) => { //programming courses
@@ -54,6 +58,16 @@ routerProgramming.get('/:language/:level', (req,res) => { //handle :URL PARAMETE
   res.send(JSON.stringify(coursesToShow)) //
 })
 
+// post method
+routerProgramming.post('/', (req, res) => { //post de
+  
+  let newCourse = req.body;//saco el new course del body
+
+  programming.push(newCourse) //agrego a la data sored
+
+  res.send(JSON.stringify(programming)) //mando como rta todos los cursos
+
+})
 
 // ******** Exporto router **********
 module.exports = routerProgramming //lo asigno directamente al objeto exports, para importarlo de una
