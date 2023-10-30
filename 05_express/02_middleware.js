@@ -16,7 +16,7 @@ const logger = (req, res, next) => {
   //middleware/mostrar el método accedido, el path y la hora de acceso
   console.log(method, url, time); 
 
-  next()
+  next() //pase a siguiente funcion (e.g., app.get)
 }
 
 // ---- paso el middleware aen el routing ----
