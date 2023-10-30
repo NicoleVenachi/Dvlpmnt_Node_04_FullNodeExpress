@@ -1,4 +1,8 @@
 
+//este ahora maneja la data
+const {programming} = require('../datos/cursos').coursesInfo //importo la data hardcodeada
+
+
 const getAllCourses =  (req,res) => { //programming courses
   res.json(programming) //envio pero antes de Tx lo paso a texto
 }

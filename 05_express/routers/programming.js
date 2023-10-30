@@ -1,6 +1,5 @@
 //importo express
 const express = require('express');
-const {programming} = require('../datos/cursos').coursesInfo //importo la data hardcodeada
 
 // inmporto los controllers
 const {
